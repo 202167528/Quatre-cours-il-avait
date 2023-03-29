@@ -23,7 +23,7 @@ public class CréateurDonjon : MonoBehaviour
         murVerticaleGaucheTorche, murHorizontaleBasTorche, murVerticaleDroiteTorche, murHorizontaleHautTorche,
         murVerticaleGaucheBiblio, murHorizontaleBasBiblio, murVerticaleDroiteBiblio, murHorizontaleHautBiblio,
         murVerticaleGaucheÉtage, murHorizontaleBasÉtage, murVerticaleDroiteÉtage, murHorizontaleHautÉtage,
-        murSortie, murEntrée, Héro;
+        murSortie, murEntrée, player;
 
 
     public GameObject baril, pierres1, pierres2, pierres3, champi1, champi2, champi3;
@@ -56,17 +56,19 @@ public class CréateurDonjon : MonoBehaviour
     }
     private void InstantierHéro()
     {
-        Vector3 positionHéro = new Vector3(PositionEntrée.x -3, 1, PositionEntrée.z);
-        Instantiate(Héro, positionHéro, Quaternion.identity);      
+        var entrancePosition = new Vector3(PositionEntrée.x, PositionEntrée.y, PositionEntrée.z + 0.5f);
+        var playerPosition = new Vector3(entrancePosition.x - 1, player.transform.position.y, entrancePosition.z);
+        player.transform.position = playerPosition;
     }
 
     private void DétruirePrefabExtérieur()
     {
-        Vector3 boiteVérif = new Vector3((float)0.01, (float)0.01, (float)0.01);
+        Vector3 boiteVérif = new Vector3(0.01f,0.01f,0.01f);
         for(int i = listePrefabObjets.Count - 1; i >= 0; i--)
-        {        
-            GameObject obj = listePrefabObjets[i];
-            Vector3 position = new Vector3(obj.transform.position.x, (float)0.01, obj.transform.position.z);
+        {
+            var obj = listePrefabObjets[i];
+            var objPosition = obj.transform.position;
+            Vector3 position = new Vector3(objPosition.x, 0.01f, objPosition.z);
             Debug.DrawRay(position, Vector3.down, Color.red);
             if (!Physics.Raycast(position, Vector3.down))
             {
@@ -80,6 +82,7 @@ public class CréateurDonjon : MonoBehaviour
             }
         }
     }
+    
     private void CréereDonjon()
     {
         GénérateurDonjon générateur = new GénérateurDonjon(largeurDonjon, hauteurDonjon);
@@ -101,6 +104,7 @@ public class CréateurDonjon : MonoBehaviour
         AjouterPrefab(listeDePièces);
         CréerMurs(mursParents);
     }
+    
     private void AjouterPrefab(List<Noeuds> listeDePièces)
     {
         listePrefabObjets = new List<GameObject>();
@@ -129,15 +133,11 @@ public class CréateurDonjon : MonoBehaviour
                             listePrefabObjets.Add(obj);
                             break;
                     }
-
-
-
-
-
                 }
             }
         }
     }
+    
     private void CréerMurs(GameObject mursParents)
     {
         foreach (var positionMurs in positionMurPossibleHorizontaleBas)

@@ -4,32 +4,31 @@ using UnityEngine;
 
 public class CaméraPerso : MonoBehaviour
 {
-    private GameObject joueur;
-    [SerializeField] private float VitesseAngulaire = 3f;
+    [SerializeField] private GameObject head;
+    [SerializeField] private float vitesseAngulaire = 3f;
 
     private Vector3 offset;
     private Vector3 finalOffset;
-
-
+    private  Vector3 headPosition;
 
     private void Start()
-    {  
-        joueur = GameObject.Find("Head_M");
-        var déplacement = joueur.transform.position - transform.position;
-        transform.Translate(déplacement.x - 4, déplacement.y + 2, déplacement.z, Space.World);
-        offset = transform.position - joueur.transform.position;
+    {
+        headPosition = head.transform.position;
+        var direction = (headPosition - transform.position).normalized;
+        
+        transform.Translate(direction.x * 4, direction.y * 2, direction.z, Space.World);
+        offset = transform.position - head.transform.position;
         finalOffset = offset;
     }
-
 
     private void Update()
     {
         Rotate();
-        transform.position = Vector3.Lerp(transform.position, joueur.transform.position + finalOffset, 1.25f);
-        transform.LookAt(joueur.transform.position);
+        transform.position = Vector3.Lerp(transform.position, head.transform.position + finalOffset, 1.25f);
+        transform.LookAt(headPosition);
     }
 
     void Rotate() =>
-        finalOffset = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * VitesseAngulaire, Vector3.up) * finalOffset;
+        finalOffset = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * vitesseAngulaire, Vector3.up) * finalOffset;
     
 }

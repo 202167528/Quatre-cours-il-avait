@@ -2,55 +2,52 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ContrôleRammasage : MonoBehaviour
 {
-    Animator anim;
+    private Animator anim;
     public GameObject MainDroite;
     private GameObject leTrucDansMain;
 
     public GameObject Épée2Personnage;
     public GameObject Épée2Lancé;
 
-    List<GameObject> ArmesPossible;
-    List<GameObject> ArmesLancé;
+    private List<GameObject> ArmesPossible;
+    private List<GameObject> ArmesLancé;
 
-    GameObject objetÀPrendre;
-    GameObject objetÀLancé;
+    private GameObject objetÀPrendre;
+    private GameObject objetÀLancé;
 
-    bool procheArme;
-    bool estDansLaMain;
+    private bool procheArme;
+    private bool estDansLaMain;
 
-    string TagCetObjet;
-    string nomObjetÀPrendre;
-    string nomObjetÀLancer;
-
-    private Vector3 directionLancé;
-    private Camera cam;
+    private string tagCetObjet;
+    private string nomObjetÀPrendre;
+    private string nomObjetÀLancer;
+    
     public GameObject objetTrail;
 
     private float tempsÉcoulé = 2f;
+    
     private void Start()
     {
-        directionLancé = new Vector3(0, 0, 1);
-
         procheArme = false;
         estDansLaMain = false;
 
         ArmesPossible = new List<GameObject>();
         ArmesLancé = new List<GameObject>();
 
-        cam = FindObjectOfType<Camera>();
-
         ArmesPossible.Add(Épée2Personnage);
         ArmesLancé.Add(Épée2Lancé);
         anim = GetComponent<Animator>();
     }
+    
     void Update()
     {
         if (procheArme)
         {
-            nomObjetÀPrendre = TagCetObjet + "Personnage";
+            nomObjetÀPrendre = tagCetObjet + "Personnage";
             objetÀPrendre = TrouverArmeDansListe();
             if (Input.GetKeyDown("f") && !estDansLaMain)
             {
@@ -66,7 +63,7 @@ public class ContrôleRammasage : MonoBehaviour
             if ((Input.GetMouseButton(0) || Input.GetMouseButtonDown(0)) && estDansLaMain)
             {
                 tempsÉcoulé += Time.deltaTime;
-                nomObjetÀLancer = TagCetObjet + "Lancé";
+                nomObjetÀLancer = tagCetObjet + "Lancé";
                 objetÀLancé = TrouverArmeLancéDansListe();
 
                 if (tempsÉcoulé >= 2f)
@@ -120,7 +117,7 @@ public class ContrôleRammasage : MonoBehaviour
     private void OnTriggerStay(Collider autre)
     {
         procheArme = true;
-        TagCetObjet = autre.gameObject.tag;
+        tagCetObjet = autre.gameObject.tag;
         if (Input.GetKeyDown("f") && !estDansLaMain)
         {
             Destroy(autre.gameObject);

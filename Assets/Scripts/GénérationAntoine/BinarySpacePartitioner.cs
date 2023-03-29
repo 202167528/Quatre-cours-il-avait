@@ -47,6 +47,7 @@ internal class BinarySpacePartitioner
             noeud2 = new NoeudPièce(new Vector2Int(ligne.Coordonées.x, noeudCourant.CoinBasGauche.y), noeudCourant.CoinHautDroit, noeudCourant, noeudCourant.IndexArbre + 1);
         }
         AjouterNouveauNoeudÀCollection(listÀretourner, graph, noeud1);
+        AjouterNouveauNoeudÀCollection(listÀretourner, graph, noeud2);
     }
 
     private void AjouterNouveauNoeudÀCollection(List<NoeudPièce> listÀretourner, Queue<NoeudPièce> graph, NoeudPièce noeud)
