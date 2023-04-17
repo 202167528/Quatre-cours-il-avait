@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7171839554082497360}
   - component: {fileID: 4136366266503343113}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\xC9p\xE9e2Personnage"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +62,7 @@ GameObject:
   - component: {fileID: 2304544920976132105}
   - component: {fileID: 3837504806922926908}
   - component: {fileID: 8960499822186413663}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sword_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}

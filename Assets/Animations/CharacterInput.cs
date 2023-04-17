@@ -89,6 +89,15 @@ public partial class @CharacterInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Aim"",
+                    ""type"": ""Button"",
+                    ""id"": ""8b55110a-92e3-43c5-ac5b-09d838066cda"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -234,6 +243,17 @@ public partial class @CharacterInput : IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4dd90f4e-4324-4371-b892-58aea23b5ec6"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -249,6 +269,7 @@ public partial class @CharacterInput : IInputActionCollection2, IDisposable
         m_PlayerInput_Drop = m_PlayerInput.FindAction("Drop", throwIfNotFound: true);
         m_PlayerInput_Run = m_PlayerInput.FindAction("Run", throwIfNotFound: true);
         m_PlayerInput_Jump = m_PlayerInput.FindAction("Jump", throwIfNotFound: true);
+        m_PlayerInput_Aim = m_PlayerInput.FindAction("Aim", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -315,6 +336,7 @@ public partial class @CharacterInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerInput_Drop;
     private readonly InputAction m_PlayerInput_Run;
     private readonly InputAction m_PlayerInput_Jump;
+    private readonly InputAction m_PlayerInput_Aim;
     public struct PlayerInputActions
     {
         private @CharacterInput m_Wrapper;
@@ -326,6 +348,7 @@ public partial class @CharacterInput : IInputActionCollection2, IDisposable
         public InputAction @Drop => m_Wrapper.m_PlayerInput_Drop;
         public InputAction @Run => m_Wrapper.m_PlayerInput_Run;
         public InputAction @Jump => m_Wrapper.m_PlayerInput_Jump;
+        public InputAction @Aim => m_Wrapper.m_PlayerInput_Aim;
         public InputActionMap Get() { return m_Wrapper.m_PlayerInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -356,6 +379,9 @@ public partial class @CharacterInput : IInputActionCollection2, IDisposable
                 @Jump.started -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnJump;
+                @Aim.started -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnAim;
+                @Aim.performed -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnAim;
+                @Aim.canceled -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnAim;
             }
             m_Wrapper.m_PlayerInputActionsCallbackInterface = instance;
             if (instance != null)
@@ -381,6 +407,9 @@ public partial class @CharacterInput : IInputActionCollection2, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @Aim.started += instance.OnAim;
+                @Aim.performed += instance.OnAim;
+                @Aim.canceled += instance.OnAim;
             }
         }
     }
@@ -394,5 +423,6 @@ public partial class @CharacterInput : IInputActionCollection2, IDisposable
         void OnDrop(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnAim(InputAction.CallbackContext context);
     }
 }

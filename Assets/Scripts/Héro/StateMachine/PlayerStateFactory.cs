@@ -13,10 +13,12 @@ public class PlayerStateFactory
         states[PlayerStates.idle] = new PlayerIdleState(context, this);
         states[PlayerStates.walk] = new PlayerWalkState(context, this);
         states[PlayerStates.run] = new PlayerRunState(context, this);
-        states[PlayerStates.interact] = new PlayerJumpState(context, this);
+        states[PlayerStates.interact] = new PlayerInteractState(context, this);
         states[PlayerStates.jump] = new PlayerJumpState(context, this);
         states[PlayerStates.grounded] = new PlayerGroundedState(context, this);
         states[PlayerStates.fall] = new PlayerFallState(context, this);
+        states[PlayerStates.aim] = new PlayerAimState(context, this);
+        states[PlayerStates.use] = new PlayerUseState(context, this);
     }
 
     public PlayerBaseState Idle() { return states[PlayerStates.idle]; }
@@ -32,9 +34,13 @@ public class PlayerStateFactory
     public PlayerBaseState Grounded() { return states[PlayerStates.grounded]; }
 
     public PlayerBaseState Fall() { return states[PlayerStates.fall]; }
+    
+    public PlayerBaseState Aim() { return states[PlayerStates.aim]; }
+    
+    public PlayerBaseState Use() { return states[PlayerStates.use]; }
 }
 
 public enum PlayerStates
 {
-    idle, walk, run, interact, grounded, jump, fall
+    idle, walk, run, interact, grounded, jump, fall, aim, use
 }

@@ -26,9 +26,11 @@ public class CréateurDonjon : MonoBehaviour
         murSortie, murEntrée, player;
 
 
-    public GameObject baril, pierres1, pierres2, pierres3, champi1, champi2, champi3;
+    public GameObject baril, pierres1, pierres2, pierres3, champi1, champi2, champi3, tapis1, tapis2, épée2, roche, petitePotion, grossePotion;
 
-    public GameObject épée2;
+    double[] probabilitésObjets;
+    GameObject[] ObjetsPossibles;
+    List<GameObject> objetsADétruire;
     List<GameObject> listePrefabObjets;
     List<Vector3Int> positionPortesPossiblesVerticale;
     List<Vector3Int> positionPortesPossiblesHorizontale;
@@ -59,12 +61,12 @@ public class CréateurDonjon : MonoBehaviour
         var entrancePosition = new Vector3(PositionEntrée.x, PositionEntrée.y, PositionEntrée.z + 0.5f);
         var playerPosition = new Vector3(entrancePosition.x - 1, player.transform.position.y, entrancePosition.z);
         player.transform.position = playerPosition;
+        //player.transform.forward = -(entrancePosition - playerPosition).normalized;
     }
 
     private void DétruirePrefabExtérieur()
     {
-        Vector3 boiteVérif = new Vector3(0.01f,0.01f,0.01f);
-        for(int i = listePrefabObjets.Count - 1; i >= 0; i--)
+        for (int i = listePrefabObjets.Count - 1; i >= 0; i--)
         {
             var obj = listePrefabObjets[i];
             var objPosition = obj.transform.position;
@@ -75,14 +77,30 @@ public class CréateurDonjon : MonoBehaviour
                 Destroy(obj);
                 listePrefabObjets.Remove(obj);
             }
-            if (Physics.CheckBox(position, boiteVérif, Quaternion.identity, 8))
+        }
+        List<GameObject> listeÀDétruire = new List<GameObject>();
+        for (int j = 0; j < listePrefabObjets.Count; j++)
+        {
+            var X = listePrefabObjets[j].transform.position.x;
+            var Xint = Mathf.FloorToInt(X);
+            var Y = listePrefabObjets[j].transform.position.y;
+            var Yint = Mathf.FloorToInt(Y);
+            var Z = listePrefabObjets[j].transform.position.z;
+            var Zint = Mathf.FloorToInt(Z);
+            Vector3Int positionInt = new Vector3Int(Xint, Yint, Zint);
+            if (mursVerticaux.Contains(positionInt) || mursHorizontaux.Contains(positionInt))
             {
-                Destroy(obj);
-                listePrefabObjets.Remove(obj);
+                listeÀDétruire.Add(listePrefabObjets[j]);
+                listePrefabObjets.Remove(listePrefabObjets[j]);
             }
         }
+        for (int z = listeÀDétruire.Count-1; z >= 0; z--)
+        {
+            Destroy(listeÀDétruire[z]);
+
+        }
     }
-    
+
     private void CréereDonjon()
     {
         GénérateurDonjon générateur = new GénérateurDonjon(largeurDonjon, hauteurDonjon);
@@ -96,7 +114,7 @@ public class CréateurDonjon : MonoBehaviour
         positionMurPossibleHorizontaleBas = new List<Vector3Int>();
         positionMurPossibleHorizontaleHaut = new List<Vector3Int>();
         mursVerticaux = new List<Vector3Int>();
-        mursHorizontaux= new List<Vector3Int>();
+        mursHorizontaux = new List<Vector3Int>();
         for (int i = 0; i < listeDePièces.Count; i++)
         {
             CréerMesh(listeDePièces[i].CoinBasGauche, listeDePièces[i].CoinHautDroit);
@@ -104,10 +122,13 @@ public class CréateurDonjon : MonoBehaviour
         AjouterPrefab(listeDePièces);
         CréerMurs(mursParents);
     }
-    
+
     private void AjouterPrefab(List<Noeuds> listeDePièces)
     {
         listePrefabObjets = new List<GameObject>();
+        ObjetsPossibles = new GameObject[]
+        { baril, pierres1, pierres2, pierres3, champi1, champi2, champi3, tapis1, tapis2, roche, épée2, petitePotion, grossePotion };
+        probabilitésObjets = new double[] { 0, 0.03, 0.08, 0.12, 0.17, 0.2, 0.23, 0.26, 0.3, 0.33, 0.35, 0.37, 0.45, 1.1 };
         foreach (var pièce in listeDePièces)
         {
             if (!(pièce.CoinBasDroit.x - pièce.CoinBasGauche.x == largeurCouloir) && !(pièce.CoinHautGauche.y - pièce.CoinBasGauche.y == largeurCouloir))
@@ -118,26 +139,23 @@ public class CréateurDonjon : MonoBehaviour
                     var randomZ = UnityEngine.Random.Range(pièce.CoinHautGauche.y, pièce.CoinBasGauche.y);
                     var randomX = UnityEngine.Random.Range(pièce.CoinHautGauche.x, pièce.CoinHautDroit.x);
                     Vector3Int positionPrefab = new Vector3Int(randomX, 0, randomZ);
-                    var probObj = UnityEngine.Random.Range(0, 50);
-
-                    switch (probObj)
+                    var probObj = UnityEngine.Random.Range(0f, 1f);
+                    var indexObjetChoisi = -1;
+                    for (int j = 0; j < probabilitésObjets.Length; j++)
                     {
-                        case < 3:
-                            var obj = Instantiate(baril, positionPrefab, Quaternion.identity);
-                            listePrefabObjets.Add(obj);
-                            break;
-
-                        case > 3:
-                        case < 6:
-                            obj = Instantiate(pierres1, positionPrefab, Quaternion.identity);
-                            listePrefabObjets.Add(obj);
-                            break;
+                        if (probObj > probabilitésObjets[j] && probObj < probabilitésObjets[j + 1])
+                        {
+                            indexObjetChoisi = j;
+                        }
                     }
+                    var objet = ObjetsPossibles[indexObjetChoisi];
+                    var objInstantié = Instantiate(objet, positionPrefab, Quaternion.identity);
+                    listePrefabObjets.Add(objInstantié);
                 }
             }
         }
     }
-    
+
     private void CréerMurs(GameObject mursParents)
     {
         foreach (var positionMurs in positionMurPossibleHorizontaleBas)
@@ -147,7 +165,7 @@ public class CréateurDonjon : MonoBehaviour
             {
                 CréerMur(mursParents, positionMurs, murHorizontaleBasTorche);
             }
-            else if(rand == 5)
+            else if (rand == 5)
             {
                 CréerMur(mursParents, positionMurs, murHorizontaleBasBiblio);
             }
@@ -187,23 +205,26 @@ public class CréateurDonjon : MonoBehaviour
             {
                 CréerMur(mursParents, positionMurs, murSortie);
             }
-            var rand = UnityEngine.Random.Range(0, probabilité);
-            if (rand <= 2)
-            {
-                CréerMur(mursParents, positionMurs, murVerticaleGaucheTorche);
-            }
-            if (rand == 5)
-            {
-                CréerMur(mursParents, positionMurs, murVerticaleGaucheBiblio);
-            }
-            if (rand == 6)
-            {
-                CréerMur(mursParents, positionMurs, murVerticaleGaucheÉtage);
-            }
             else
             {
-                CréerMur(mursParents, positionMurs, murVerticaleGauche);
-            }
+                var rand = UnityEngine.Random.Range(0, probabilité);
+                if (rand <= 2)
+                {
+                    CréerMur(mursParents, positionMurs, murVerticaleGaucheTorche);
+                }
+                if (rand == 5)
+                {
+                    CréerMur(mursParents, positionMurs, murVerticaleGaucheBiblio);
+                }
+                if (rand == 6)
+                {
+                    CréerMur(mursParents, positionMurs, murVerticaleGaucheÉtage);
+                }
+                else
+                {
+                    CréerMur(mursParents, positionMurs, murVerticaleGauche);
+                }
+            }      
         }
         TroucerMursDroiteLePlusÉloigné();
         foreach (var positionMurs in positionMurPossibleVerticaleDroite)
@@ -212,22 +233,25 @@ public class CréateurDonjon : MonoBehaviour
             {
                 CréerMur(mursParents, positionMurs, murEntrée);
             }
-            var rand = UnityEngine.Random.Range(0, probabilité);
-            if (rand <= 2)
-            {
-                CréerMur(mursParents, positionMurs, murVerticaleDroiteTorche);
-            }
-            if (rand == 5)
-            {
-                CréerMur(mursParents, positionMurs, murVerticaleDroiteBiblio);
-            }
-            if (rand == 6)
-            {
-                CréerMur(mursParents, positionMurs, murVerticaleDroiteÉtage);
-            }
             else
             {
-                CréerMur(mursParents, positionMurs, murVerticaleDroite);
+                var rand = UnityEngine.Random.Range(0, probabilité);
+                if (rand <= 2)
+                {
+                    CréerMur(mursParents, positionMurs, murVerticaleDroiteTorche);
+                }
+                if (rand == 5)
+                {
+                    CréerMur(mursParents, positionMurs, murVerticaleDroiteBiblio);
+                }
+                if (rand == 6)
+                {
+                    CréerMur(mursParents, positionMurs, murVerticaleDroiteÉtage);
+                }
+                else
+                {
+                    CréerMur(mursParents, positionMurs, murVerticaleDroite);
+                }
             }
         }
     }
@@ -304,7 +328,7 @@ public class CréateurDonjon : MonoBehaviour
         mesh.vertices = sommets;
         mesh.uv = uvs;
         mesh.triangles = triangles;
-        GameObject soldonjon = new GameObject("Mesh"+coinBasGauche, typeof(MeshFilter), typeof(MeshRenderer));
+        GameObject soldonjon = new GameObject("Mesh" + coinBasGauche, typeof(MeshFilter), typeof(MeshRenderer));
         soldonjon.transform.position = Vector3.zero;
         soldonjon.transform.localScale = Vector3.one;
         soldonjon.GetComponent<MeshFilter>().mesh = mesh;
@@ -315,7 +339,7 @@ public class CréateurDonjon : MonoBehaviour
         for (int rangée = (int)sBasGauche.x; rangée < (int)sBasDroit.x; rangée++)
         {
             var positionMurs = new Vector3(rangée, 0, sBasGauche.z);
-            AjouterPositionMursÀListeHorizontale(positionMurs, positionMurPossibleHorizontaleBas,positionPortesPossiblesHorizontale);
+            AjouterPositionMursÀListeHorizontale(positionMurs, positionMurPossibleHorizontaleBas, positionPortesPossiblesHorizontale);
         }
         for (int rangée = (int)sHautGauche.x; rangée < (int)sHautDroit.x; rangée++)
         {

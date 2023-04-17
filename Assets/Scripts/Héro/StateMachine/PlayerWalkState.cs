@@ -13,13 +13,12 @@ public class PlayerWalkState : PlayerBaseState
     public override void EnterState()
     {
         Ctx.Animator.SetBool(Ctx.IsWalkingHash, true);
-        Ctx.Animator.SetBool(Ctx.IsRunningHash, false);
     }
 
     public override void UpdateState()
     {
-        Ctx.AppliedMovementX = 1.5f * Ctx.CurrentMovementInput.x;
-        Ctx.AppliedMovementZ = 1.5f * Ctx.CurrentMovementInput.y;
+        Ctx.AppliedMovementX = Ctx.MoveMultiplier * Ctx.CurrentMovementInput.x;
+        Ctx.AppliedMovementZ = Ctx.MoveMultiplier * Ctx.CurrentMovementInput.y;
         CheckSwitchStates();
     }
 
@@ -27,10 +26,13 @@ public class PlayerWalkState : PlayerBaseState
 
     public override void CheckSwitchStates()
     {
-        if (Ctx.IsInteractPressed)
+        if (Ctx.IsInteractPressed && Ctx.ItemManager.equippedWeapon == null && Ctx.ItemManager.equippedPotion == null)
         {
             SwitchState(Factory.Interact());
-        } else if (!Ctx.IsMovementPressed)
+        } else if (Ctx.IsUsePressed)
+        {
+            SwitchState(Factory.Use());
+        }else if (!Ctx.IsMovementPressed)
         {
             SwitchState(Factory.Idle());
         } else if (Ctx.IsMovementPressed && Ctx.IsRunPressed)

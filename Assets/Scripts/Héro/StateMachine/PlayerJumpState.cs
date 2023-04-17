@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerJumpState : PlayerBaseState, IRootState
 {
+    private float currentMovementX;
+    private float currentMovementZ;
+    private float currentMovement;
+    
     public PlayerJumpState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory) : base(
         currentContext, playerStateFactory)
     {
@@ -17,6 +21,12 @@ public class PlayerJumpState : PlayerBaseState, IRootState
 
     public override void UpdateState()
     {
+        if (Ctx.IsMovementPressed)
+        {
+            Ctx.AppliedMovementX = Ctx.CurrentMovementInput.x * currentMovement;
+            Ctx.AppliedMovementZ = Ctx.CurrentMovementInput.y * currentMovement;
+        }
+        
         HandleGravity();
         CheckSwitchStates();
     }
@@ -39,12 +49,19 @@ public class PlayerJumpState : PlayerBaseState, IRootState
         }
     }
 
-    public override void InitializeSubState(){}
+    public override void InitializeSubState()
+    {
+    }
 
     private void HandleJump()
     {
         Ctx.Animator.SetBool(Ctx.IsJumpingHash,true);
         Ctx.IsJumping = true;
+        
+        currentMovementX = Mathf.Abs(Ctx.AppliedMovementX);
+        currentMovementZ = Mathf.Abs(Ctx.AppliedMovementZ);
+        currentMovement = new Vector2(currentMovementX, currentMovementZ).magnitude;
+
         Ctx.CurrentMovementY = Ctx.InitialJumpVelocity;
         Ctx.AppliedMovementY = Ctx.InitialJumpVelocity;
     }

@@ -171,7 +171,7 @@ MonoBehaviour:
     m_ActionName: PlayerInput/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1828354964}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerInput, Assembly-CSharp
         m_MethodName: OnLook
         m_Mode: 0
@@ -319,6 +319,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &387833630
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 387833631}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &387833631
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 387833630}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.255, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &712475605
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,6 +468,11 @@ MonoBehaviour:
   angle: 90
   smoothSpeed: 0.5
   radius: 0.5
+--- !u!4 &1185627305 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4896233072857518038, guid: 27067e857c73ad8478ec551ddc2a1812, type: 3}
+  m_PrefabInstance: {fileID: 1925787411}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1639164716
 GameObject:
   m_ObjectHideFlags: 0
@@ -512,12 +548,17 @@ MonoBehaviour:
   player: {fileID: 1828354960}
   baril: {fileID: 2317576605586580694, guid: 5adaedd4c0081614da171fecdf6bbd37, type: 3}
   pierres1: {fileID: 8751214283069136412, guid: 6db9ee8c8a6f3884da4315da71e07848, type: 3}
-  pierres2: {fileID: 0}
-  pierres3: {fileID: 0}
-  champi1: {fileID: 0}
-  champi2: {fileID: 0}
-  champi3: {fileID: 0}
+  pierres2: {fileID: 387833630}
+  pierres3: {fileID: 387833630}
+  champi1: {fileID: 387833630}
+  champi2: {fileID: 387833630}
+  champi3: {fileID: 387833630}
+  tapis1: {fileID: 387833630}
+  tapis2: {fileID: 387833630}
   "\xE9p\xE9e2": {fileID: 5011161095933176008, guid: 2e18da34b4860204b8133428a38e9574, type: 3}
+  roche: {fileID: 387833630}
+  petitePotion: {fileID: 387833630}
+  grossePotion: {fileID: 387833630}
   "probabilit\xE9": 50
 --- !u!1 &1828354960 stripped
 GameObject:
@@ -549,84 +590,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1828354964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1828354960}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecc3ec273ce0bc24aaa2f3b0505692c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pickableLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  hitRange: 1
-  pickUpParent: {fileID: 0}
-  inHandItem: {fileID: 0}
-  movement: {fileID: 73198452223889002, guid: 84428548d17bc4b4c845d1b336b7d5f2, type: 3}
-  attack: {fileID: 0}
-  interactionInput: {fileID: -2446659016795940249, guid: 84428548d17bc4b4c845d1b336b7d5f2, type: 3}
-  dropInput: {fileID: -6521159428462118055, guid: 84428548d17bc4b4c845d1b336b7d5f2, type: 3}
-  useInput: {fileID: 4522540649550836137, guid: 84428548d17bc4b4c845d1b336b7d5f2, type: 3}
-  OnMovementInput:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1828354965}
-        m_TargetAssemblyTypeName: Agent, Assembly-CSharp
-        m_MethodName: set_MovementInput
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnAttack:
-    m_PersistentCalls:
-      m_Calls: []
-  OnUse:
-    m_PersistentCalls:
-      m_Calls: []
-  OnInteract:
-    m_PersistentCalls:
-      m_Calls: []
-  OnDrop:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &1828354965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1828354960}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3723bb957e05c9647ab0fd8cafb46816, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1828354966
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1828354960}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 463f72c737e26e8488afb99a6a65d832, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxSpeed: 2
-  acceleration: 50
-  decceleration: 100
-  currentSpeed: 0
 --- !u!143 &1828354968
 CharacterController:
   m_ObjectHideFlags: 0
@@ -657,12 +620,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aee97e8ad542bc041a1bf60a5271b712, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
   rotationFactorPerFrame: 5
-  rotationRunFactorPerFrame: 15
-  runMultiplier: 3
+  rotationRunFactorPerFrame: 10
+  runMultiplier: 5
+  moveMultiplier: 2.5
+  targetDetectionRadius: 5
+  targetLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
   maxJumpHeight: 1
   maxJumpTime: 0.75
   fallMultiplier: 2
+--- !u!114 &1828354970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828354960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47336fe91c02b3b4fb0def25eb2a0f3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemSlot: {fileID: 1185627305}
+  equippedWeapon: {fileID: 0}
+  equippedPotion: {fileID: 0}
 --- !u!1001 &1925787411
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -753,7 +739,7 @@ PrefabInstance:
     - target: {fileID: 7045995112500438097, guid: 27067e857c73ad8478ec551ddc2a1812, type: 3}
       propertyPath: agent
       value: 
-      objectReference: {fileID: 1828354965}
+      objectReference: {fileID: 0}
     - target: {fileID: 7045995112500438097, guid: 27067e857c73ad8478ec551ddc2a1812, type: 3}
       propertyPath: animator
       value: 
