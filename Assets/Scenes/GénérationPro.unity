@@ -473,9 +473,9 @@ MonoBehaviour:
   smoothSpeed: 0.5
   layermask:
     serializedVersion: 2
-    m_Bits: 0
-  matOpaque: {fileID: 0}
-  matTransparent: {fileID: 0}
+    m_Bits: 8
+  matOpaque: {fileID: 2100000, guid: 9ff14b680c83ed542b919f106f60db8f, type: 2}
+  matTransparent: {fileID: 2100000, guid: 8c1f3b9d892bfd64ea067d1e77b0ad15, type: 2}
   radius: 0.5
 --- !u!4 &1185627305 stripped
 Transform:

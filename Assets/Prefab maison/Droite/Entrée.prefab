@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 9161088390271724798}
   - component: {fileID: 3403127851310957705}
   - component: {fileID: 7215404795759766024}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SM_Env_Wall_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
