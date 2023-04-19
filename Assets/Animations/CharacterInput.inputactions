@@ -71,7 +71,7 @@
                 {
                     "name": "Aim",
                     "type": "Button",
-                    "id": "8b55110a-92e3-43c5-ac5b-09d838066cda",
+                    "id": "37669781-a8c4-413c-9cde-53809c3c0046",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -224,7 +224,7 @@
                 },
                 {
                     "name": "",
-                    "id": "4dd90f4e-4324-4371-b892-58aea23b5ec6",
+                    "id": "8720a323-4f16-4666-98d0-bdad78dfcf2c",
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",

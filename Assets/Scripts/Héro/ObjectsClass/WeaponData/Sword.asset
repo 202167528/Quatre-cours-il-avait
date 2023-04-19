@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45bb0d0a63db81a4c809000ef4b21421, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
+  animation: 0
   durability: 30
   damage: 1
   weaponName: "\xC9p\xE9e "
-  weaponPrefab: {fileID: 5011161095933176008, guid: 2e18da34b4860204b8133428a38e9574, type: 3}
+  weaponPrefab: {fileID: 5011161095933176008, guid: f90f3434eeee12845936abd305d86507, type: 3}

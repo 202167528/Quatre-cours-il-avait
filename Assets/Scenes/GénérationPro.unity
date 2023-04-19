@@ -205,6 +205,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 6dcfda27-5dfa-4bad-948d-be987f02373e
     m_ActionName: PlayerInput/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 37669781-a8c4-413c-9cde-53809c3c0046
+    m_ActionName: PlayerInput/Aim[/Mouse/rightButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: PlayerInput
@@ -467,6 +471,11 @@ MonoBehaviour:
   distance: 5.5
   angle: 90
   smoothSpeed: 0.5
+  layermask:
+    serializedVersion: 2
+    m_Bits: 0
+  matOpaque: {fileID: 0}
+  matTransparent: {fileID: 0}
   radius: 0.5
 --- !u!4 &1185627305 stripped
 Transform:
@@ -517,16 +526,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79a0e1bcbe27a94d9649fc3349377ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  largeurDonjon: 110
+  largeurDonjon: 60
   hauteurDonjon: 70
   "pi\xE8ceLargeurMin": 20
-  "pi\xE8ceHauteurMin": 10
+  "pi\xE8ceHauteurMin": 20
   "it\xE9rationMax": 30
   largeurCouloir: 3
   "mat\xE9riel": {fileID: 2100000, guid: d8c1f73efa86eb643818c08548596967, type: 2}
-  modificateurCoinBas: 0.283
-  modificateurCoinHaut: 0.897
-  "d\xE9calage": 2
+  modificateurCoinBas: 0.237
+  modificateurCoinHaut: 0.781
+  "d\xE9calage": 1
   murVerticaleGauche: {fileID: 290975522589518202, guid: dac5a4e47abf1d24e962a511c7ad626e, type: 3}
   murHorizontaleBas: {fileID: 290975522589518202, guid: 4f3afa6bf196bdb48b33091ce06fa096, type: 3}
   murVerticaleDroite: {fileID: 290975522589518202, guid: ee7b688f00789ea49aaaeba83bfb7bd6, type: 3}
@@ -548,17 +557,17 @@ MonoBehaviour:
   player: {fileID: 1828354960}
   baril: {fileID: 2317576605586580694, guid: 5adaedd4c0081614da171fecdf6bbd37, type: 3}
   pierres1: {fileID: 8751214283069136412, guid: 6db9ee8c8a6f3884da4315da71e07848, type: 3}
-  pierres2: {fileID: 387833630}
-  pierres3: {fileID: 387833630}
-  champi1: {fileID: 387833630}
-  champi2: {fileID: 387833630}
-  champi3: {fileID: 387833630}
-  tapis1: {fileID: 387833630}
-  tapis2: {fileID: 387833630}
+  pierres2: {fileID: 8751214283069136412, guid: c0ed5a1483a993544ab0dec7cbc3230e, type: 3}
+  pierres3: {fileID: 8751214283069136412, guid: b9ad0059f71159d40824771a0489c31e, type: 3}
+  champi1: {fileID: 4598097389667309573, guid: 35f36bec02973054bbfc9ae80ce1e908, type: 3}
+  champi2: {fileID: 4598097389667309573, guid: 8e3d95c8d2c9fa145856faccdb2b92a6, type: 3}
+  champi3: {fileID: 4598097389667309573, guid: 3782ee83793fb9744904c8f618f2ff13, type: 3}
+  tapis1: {fileID: 4917573610761665550, guid: 4045473fd941d2c46bad3fc0aa704279, type: 3}
+  tapis2: {fileID: 4718371089841088726, guid: 2797ccc792767174baaefcbaf6780f7c, type: 3}
   "\xE9p\xE9e2": {fileID: 5011161095933176008, guid: 2e18da34b4860204b8133428a38e9574, type: 3}
   roche: {fileID: 387833630}
-  petitePotion: {fileID: 387833630}
-  grossePotion: {fileID: 387833630}
+  petitePotion: {fileID: 5524103012728513907, guid: ca8f45a31009b0a4c9cb7c1f74fddf3b, type: 3}
+  grossePotion: {fileID: 7353277750956770480, guid: b9f075753d70fd7498a11edf7493f892, type: 3}
   "probabilit\xE9": 50
 --- !u!1 &1828354960 stripped
 GameObject:
@@ -730,7 +739,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3219742930704615719, guid: 27067e857c73ad8478ec551ddc2a1812, type: 3}
       propertyPath: m_Name
-      value: Personnage
+      value: "H\xE9roGordonQuiMarche"
       objectReference: {fileID: 0}
     - target: {fileID: 3219742930704615719, guid: 27067e857c73ad8478ec551ddc2a1812, type: 3}
       propertyPath: m_TagString
