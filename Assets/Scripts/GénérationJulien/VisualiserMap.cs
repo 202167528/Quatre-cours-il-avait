@@ -13,8 +13,6 @@ public class VisualiserMap : MonoBehaviour
 
     Dictionary<Vector3, GameObject> dictionnaireObstacles = new Dictionary<Vector3, GameObject>();
 
-    public bool animer;
-
     private void Awake() 
         => parent = this.transform;
 
@@ -172,66 +170,7 @@ public class VisualiserMap : MonoBehaviour
         var element = Instantiate(prefab, placementPosition, rotation);
         element.transform.parent = parent;
         dictionnaireObstacles.Add(position, element);
-        if (animer)
-        {
-            element.AddComponent<DropTween>();
-            DropTween.IncreaseDropTime();
-        }
     }
-
-    // private void VisualiserAvecPrimitives(MapGrille grille, MapInformation information)
-    // {
-    //     PlacerPointsDébutEtFin(information);
-    //     for (int i = 0; i < information.obstacleArray.Length; i++)
-    //         if (information.obstacleArray[i])
-    //         {
-    //             var positionSurGrille = grille.CalculerCoordinatesDepuisIndex(i);
-    //             if (positionSurGrille == information.positionDébut || positionSurGrille == information.positionFin)
-    //                 continue;
-    //
-    //             grille.DéfinirCellule(positionSurGrille.x, positionSurGrille.z, TypeObjetCellule.Obstacle);
-    //             if (PlacerObstacleChevalier(information, positionSurGrille))
-    //                 continue;
-    //
-    //             if (dictionnaireObstacles.ContainsKey(positionSurGrille) == false)
-    //                 CréerIndicateur(positionSurGrille, Color.white, PrimitiveType.Cube);
-    //         }
-    // }
-    //
-    // private bool PlacerObstacleChevalier(MapInformation information, Vector3 positionSurGrille)
-    // {
-    //     foreach (var chevalier in information.listePiècesChevalier)
-    //     {
-    //         if (chevalier.Position == positionSurGrille)
-    //         {
-    //             CréerIndicateur(positionSurGrille, Color.red, PrimitiveType.Cube);
-    //             return true;
-    //         }
-    //     }
-    //
-    //     return false;
-    // }
-
-    // private void PlacerPointsDébutEtFin(MapInformation information)
-    // {
-    //     CréerIndicateur(information.positionDébut, CouleurDébut, PrimitiveType.Sphere);
-    //     CréerIndicateur(information.positionFin, CouleurFin, PrimitiveType.Sphere);
-    // }
-
-    // private void CréerIndicateur(Vector3 position, Color color, PrimitiveType sphere)
-    // {
-    //     var element = GameObject.CreatePrimitive(sphere);
-    //     dictionnaireObstacles.Add(position, element);
-    //     element.transform.position = position + new Vector3(.5f, .5f, .5f);
-    //     element.transform.parent = parent;
-    //     var renderer = element.GetComponent<Renderer>();
-    //     renderer.material.SetColor("_Color", color);
-    //     if (animer)
-    //     {
-    //         element.AddComponent<DropTween>();
-    //         DropTween.IncreaseDropTime();
-    //     }
-    // }
 
     public void ClairerMap()
     {
@@ -239,8 +178,5 @@ public class VisualiserMap : MonoBehaviour
             Destroy(obstacle);
 
         dictionnaireObstacles.Clear();
-
-        if (animer)
-            DropTween.ResetTime();
     }
 }

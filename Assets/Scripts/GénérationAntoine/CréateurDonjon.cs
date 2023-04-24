@@ -26,7 +26,7 @@ public class CréateurDonjon : MonoBehaviour
         murSortie, murEntrée, player;
 
 
-    public GameObject baril, pierres1, pierres2, pierres3, champi1, champi2, champi3, tapis1, tapis2, épée2, roche, petitePotion, grossePotion;
+    public GameObject baril, pierres1, pierres2, pierres3, champi1, champi2, champi3, tapis1, tapis2, épée2, hache, petitePotion, grossePotion;
 
     double[] probabilitésObjets;
     GameObject[] ObjetsPossibles;
@@ -42,8 +42,8 @@ public class CréateurDonjon : MonoBehaviour
     List<Vector3Int> mursHorizontaux;
     Vector3 MursGaucheLePlusLoin;
     Vector3 MursDroiteLePlusLoin;
-    Vector3 PositionEntrée;
     Vector3 PositionSortie;
+    Vector3 PositionEntrée;
     [SerializeField]
     int probabilité;
     private void Awake()
@@ -51,15 +51,14 @@ public class CréateurDonjon : MonoBehaviour
         CréereDonjon();
         InstantierHéro();
     }
-
-    void Update()
+    private void Start()
     {
         DétruirePrefabExtérieur();
     }
     private void InstantierHéro()
     {
-        var entrancePosition = new Vector3(PositionEntrée.x, PositionEntrée.y, PositionEntrée.z + 0.5f);
-        var playerPosition = new Vector3(entrancePosition.x - 1, player.transform.position.y, entrancePosition.z);
+        var entrancePosition = new Vector3(PositionEntrée.x, PositionEntrée.y, PositionEntrée.z);
+        var playerPosition = new Vector3(entrancePosition.x + 1, player.transform.position.y, entrancePosition.z + 0.3f);
         player.transform.position = playerPosition;
         //player.transform.forward = -(entrancePosition - playerPosition).normalized;
     }
@@ -127,8 +126,8 @@ public class CréateurDonjon : MonoBehaviour
     {
         listePrefabObjets = new List<GameObject>();
         ObjetsPossibles = new GameObject[]
-        { baril, pierres1, pierres2, pierres3, champi1, champi2, champi3, tapis1, tapis2, roche, épée2, petitePotion, grossePotion };
-        probabilitésObjets = new double[] { 0, 0.03, 0.08, 0.12, 0.17, 0.2, 0.23, 0.26, 0.3, 0.33, 0.35, 0.37, 0.45, 1.1 };
+        { baril, pierres1, pierres2, pierres3, champi1, champi2, champi3, tapis1, tapis2, hache, épée2, petitePotion, grossePotion };
+        probabilitésObjets = new double[] { 0, 0.05, 0.25, 0.35, 0.45, 0.6, 0.7, 0.80, 0.82, 0.84, 0.88, 0.92, 0.98, 1.1 };
         foreach (var pièce in listeDePièces)
         {
             if (!(pièce.CoinBasDroit.x - pièce.CoinBasGauche.x == largeurCouloir) && !(pièce.CoinHautGauche.y - pièce.CoinBasGauche.y == largeurCouloir))
@@ -201,7 +200,7 @@ public class CréateurDonjon : MonoBehaviour
         TrouverMursGaucheLePlusÉloigné();
         foreach (var positionMurs in positionMurPossibleVerticaleGauche)
         {
-            if (positionMurs == PositionSortie)
+            if (positionMurs == PositionEntrée)
             {
                 CréerMur(mursParents, positionMurs, murSortie);
             }
@@ -229,7 +228,7 @@ public class CréateurDonjon : MonoBehaviour
         TroucerMursDroiteLePlusÉloigné();
         foreach (var positionMurs in positionMurPossibleVerticaleDroite)
         {
-            if (positionMurs == PositionEntrée)
+            if (positionMurs == PositionSortie)
             {
                 CréerMur(mursParents, positionMurs, murEntrée);
             }
@@ -278,7 +277,7 @@ public class CréateurDonjon : MonoBehaviour
         }
         var random = UnityEngine.Random.Range(0 + 1, listIndex.Count - 1);
         int indexFinale = listIndex[random];
-        PositionEntrée = positionMurPossibleVerticaleDroite[indexFinale];
+        PositionSortie = positionMurPossibleVerticaleDroite[indexFinale];
     }
 
     private void TrouverMursGaucheLePlusÉloigné()
@@ -303,7 +302,7 @@ public class CréateurDonjon : MonoBehaviour
         }
         var random = UnityEngine.Random.Range(0 + 1, listIndex.Count - 1);
         int indexFinale = listIndex[random];
-        PositionSortie = positionMurPossibleVerticaleGauche[indexFinale];
+        PositionEntrée = positionMurPossibleVerticaleGauche[indexFinale];
     }
 
     private void CréerMur(GameObject mursParents, Vector3Int positionMurs, GameObject mursPrefab)

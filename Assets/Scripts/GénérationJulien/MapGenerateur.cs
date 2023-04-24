@@ -5,7 +5,6 @@ public class MapGenerateur : MonoBehaviour
     public VisualiserGrille visualisateurGrille;
     public VisualiserMap visualiserMap;
 
-    private Direction côtéDébut = Direction.Bas, côtéFin = Direction.Haut;
     [Range(1, 100)] public int nbPièces;
 
     public bool réparationAutomatique = true;

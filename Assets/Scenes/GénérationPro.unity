@@ -543,7 +543,7 @@ MonoBehaviour:
   "mat\xE9riel": {fileID: 2100000, guid: d8c1f73efa86eb643818c08548596967, type: 2}
   modificateurCoinBas: 0.237
   modificateurCoinHaut: 0.781
-  "d\xE9calage": 1
+  "d\xE9calage": 0
   murVerticaleGauche: {fileID: 290975522589518202, guid: dac5a4e47abf1d24e962a511c7ad626e, type: 3}
   murHorizontaleBas: {fileID: 290975522589518202, guid: 4f3afa6bf196bdb48b33091ce06fa096, type: 3}
   murVerticaleDroite: {fileID: 290975522589518202, guid: ee7b688f00789ea49aaaeba83bfb7bd6, type: 3}
@@ -573,7 +573,7 @@ MonoBehaviour:
   tapis1: {fileID: 4917573610761665550, guid: 4045473fd941d2c46bad3fc0aa704279, type: 3}
   tapis2: {fileID: 4718371089841088726, guid: 2797ccc792767174baaefcbaf6780f7c, type: 3}
   "\xE9p\xE9e2": {fileID: 5011161095933176008, guid: 2e18da34b4860204b8133428a38e9574, type: 3}
-  roche: {fileID: 387833630}
+  hache: {fileID: 387833630}
   petitePotion: {fileID: 5524103012728513907, guid: ca8f45a31009b0a4c9cb7c1f74fddf3b, type: 3}
   grossePotion: {fileID: 7353277750956770480, guid: b9f075753d70fd7498a11edf7493f892, type: 3}
   "probabilit\xE9": 50
@@ -717,15 +717,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3219742930704615716, guid: 27067e857c73ad8478ec551ddc2a1812, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 49.3
       objectReference: {fileID: 0}
     - target: {fileID: 3219742930704615716, guid: 27067e857c73ad8478ec551ddc2a1812, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.49
+      value: 7.61
       objectReference: {fileID: 0}
     - target: {fileID: 3219742930704615716, guid: 27067e857c73ad8478ec551ddc2a1812, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 23.1
       objectReference: {fileID: 0}
     - target: {fileID: 3219742930704615716, guid: 27067e857c73ad8478ec551ddc2a1812, type: 3}
       propertyPath: m_LocalRotation.w

@@ -21,11 +21,11 @@ public static class MapAide
         switch (direction)
         {
             case Direction.Haut:
-                position = new Vector3(Random.Range(grille.Largeur / 2, grille.Largeur - 1), 0, grille.Longueur - 1);
+                position = new Vector3(Random.Range(grille.Largeur * 3 / 4, grille.Largeur - 3), 0, grille.Longueur - 1);
                 break;
 
             case Direction.Bas:
-                position = new Vector3(Random.Range(0, grille.Largeur / 2), 0, 0);
+                position = new Vector3(Random.Range(0, grille.Largeur / 4), 0, 0);
                 break;
 
             default:
