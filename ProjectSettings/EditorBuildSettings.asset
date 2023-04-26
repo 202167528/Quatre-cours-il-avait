@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Plateformes.unity
     guid: 88cf3344bbc84c340b95905dcb8fb689
+  - enabled: 1
+    path: Assets/Scenes/Mort.unity
+    guid: 678ca05357a97424198f97139133d9b5
   m_configObjects: {}

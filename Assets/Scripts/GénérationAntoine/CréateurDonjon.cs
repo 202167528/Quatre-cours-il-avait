@@ -48,6 +48,7 @@ public class CréateurDonjon : MonoBehaviour
     int probabilité;
     private void Awake()
     {
+        player = GameObject.Find("HéroGordonQuiMarche");
         CréereDonjon();
         InstantierHéro();
     }

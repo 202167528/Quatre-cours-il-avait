@@ -26,13 +26,13 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private int maxHealth;
     [SerializeField] private int maxTotalHealth;
 
-    private ChangerScène changerScène = ChangerScène.Instance;
+    private GérerPersonnage changerScène = GérerPersonnage.Instance;
 
     public int Health { get { return health; } }
     public int MaxHealth { get { return maxHealth; } }
     public int MaxTotalHealth { get { return maxTotalHealth; } }
 
-    private void Awake()
+    private void Start()
     {
         health = changerScène.life;
     }

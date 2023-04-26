@@ -5,12 +5,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
-public class ChangerScène : MonoBehaviour
+public class GérerPersonnage : MonoBehaviour
 {
     private void OnCollisionEnter(Collision collision)
     {
         var nomObjet = collision.gameObject.name;
-        if (nomObjet == "Wooden_Door")
+        if (nomObjet == "Wooden_DoorFin")
         {
             if (SceneManager.GetActiveScene().name == "GénérationPro")
             {
@@ -31,7 +31,31 @@ public class ChangerScène : MonoBehaviour
             viePerso.Hurt(1);
         }
     }
-    public static ChangerScène Instance
+    public void PlayGame()
+    {
+        if (SceneManager.GetActiveScene().name == "Fond menu 2")
+        {
+            SceneManager.LoadScene("Tutoriel");
+            life = 5;
+        }
+        else
+        {
+            int valeur = Random.Range(0, 2);
+
+            if (valeur == 0)
+                SceneManager.LoadScene("GenerationJulien");
+            else
+                SceneManager.LoadScene("Plateformes");
+        }
+    }
+
+    public void QuitGame()
+    {
+        Debug.Log("Quitter");
+        Application.Quit();
+    }
+
+    public static GérerPersonnage Instance
     {
         get;
         set;
@@ -45,14 +69,12 @@ public class ChangerScène : MonoBehaviour
 
     void Start()
     {
-        //Load first game scene (probably main menu)
-        //Application.LoadLevel(2);
+        //currentScène;
     }
-
 
     // Data persisted between scenes
     public int life;
-    //public float armor = 0;
+    //public string currentScène = "";
     //public float weapon = 0;
 
 
@@ -61,11 +83,11 @@ public class ChangerScène : MonoBehaviour
         life = PlayerStats.Instance.Health;
         if (life == 0)
         {
-            SceneManager.LoadScene("Fond menu 2");
+            SceneManager.LoadScene("Mort");
             life = 5;
         }
-        
-            //animation mort
+
+        //animation mort
 
     }
 }
