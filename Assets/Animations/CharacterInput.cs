@@ -98,6 +98,15 @@ public partial class @CharacterInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Throw"",
+                    ""type"": ""Button"",
+                    ""id"": ""4099c17e-5028-4908-8631-0ef60b56e343"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -254,6 +263,17 @@ public partial class @CharacterInput: IInputActionCollection2, IDisposable
                     ""action"": ""Aim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eb6c24cf-b973-40cc-99c5-c81e6eb54c20"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Throw"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -270,6 +290,7 @@ public partial class @CharacterInput: IInputActionCollection2, IDisposable
         m_PlayerInput_Run = m_PlayerInput.FindAction("Run", throwIfNotFound: true);
         m_PlayerInput_Jump = m_PlayerInput.FindAction("Jump", throwIfNotFound: true);
         m_PlayerInput_Aim = m_PlayerInput.FindAction("Aim", throwIfNotFound: true);
+        m_PlayerInput_Throw = m_PlayerInput.FindAction("Throw", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -339,6 +360,7 @@ public partial class @CharacterInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerInput_Run;
     private readonly InputAction m_PlayerInput_Jump;
     private readonly InputAction m_PlayerInput_Aim;
+    private readonly InputAction m_PlayerInput_Throw;
     public struct PlayerInputActions
     {
         private @CharacterInput m_Wrapper;
@@ -351,6 +373,7 @@ public partial class @CharacterInput: IInputActionCollection2, IDisposable
         public InputAction @Run => m_Wrapper.m_PlayerInput_Run;
         public InputAction @Jump => m_Wrapper.m_PlayerInput_Jump;
         public InputAction @Aim => m_Wrapper.m_PlayerInput_Aim;
+        public InputAction @Throw => m_Wrapper.m_PlayerInput_Throw;
         public InputActionMap Get() { return m_Wrapper.m_PlayerInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -384,6 +407,9 @@ public partial class @CharacterInput: IInputActionCollection2, IDisposable
             @Aim.started += instance.OnAim;
             @Aim.performed += instance.OnAim;
             @Aim.canceled += instance.OnAim;
+            @Throw.started += instance.OnThrow;
+            @Throw.performed += instance.OnThrow;
+            @Throw.canceled += instance.OnThrow;
         }
 
         private void UnregisterCallbacks(IPlayerInputActions instance)
@@ -412,6 +438,9 @@ public partial class @CharacterInput: IInputActionCollection2, IDisposable
             @Aim.started -= instance.OnAim;
             @Aim.performed -= instance.OnAim;
             @Aim.canceled -= instance.OnAim;
+            @Throw.started -= instance.OnThrow;
+            @Throw.performed -= instance.OnThrow;
+            @Throw.canceled -= instance.OnThrow;
         }
 
         public void RemoveCallbacks(IPlayerInputActions instance)
@@ -439,5 +468,6 @@ public partial class @CharacterInput: IInputActionCollection2, IDisposable
         void OnRun(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
+        void OnThrow(InputAction.CallbackContext context);
     }
 }

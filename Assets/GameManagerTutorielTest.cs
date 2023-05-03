@@ -7,6 +7,8 @@ public class GameManagerTutorielTest : MonoBehaviour
 {
     int vie;
     int layerDégat = 9;
+    [SerializeField] private LayerMask layerPorte;
+    float radius = 1.5f;
 
     GameManagerDébut gameManager;
 
@@ -16,14 +18,23 @@ public class GameManagerTutorielTest : MonoBehaviour
         vie = gameManager.vie;
     }
 
+    //private void Update()
+    //{
+    //    var colliders = Physics.OverlapSphere(transform.position, radius, layerPorte);
+    //    if(colliders.Length > 0)
+    //    {
+    //        gameManager.ChangerScène();
+    //    }
+    //}
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.name == "Wooden_DoorFin")
         {
             gameManager.ChangerScène();
         }
-        Debug.Log("Il y a eu contact avec "+ collision.gameObject.name);
-        
+        Debug.Log("Il y a eu contact avec " + collision.gameObject.name);
+
         if (collision.gameObject.layer == layerDégat)
         {
             Debug.Log("Collision du layer");

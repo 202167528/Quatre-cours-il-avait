@@ -19,6 +19,8 @@ public class PlayerStateFactory
         states[PlayerStates.fall] = new PlayerFallState(context, this);
         states[PlayerStates.aim] = new PlayerAimState(context, this);
         states[PlayerStates.use] = new PlayerUseState(context, this);
+        states[PlayerStates.throwObject] = new PlayerThrowState(context, this);
+
     }
 
     public PlayerBaseState Idle() { return states[PlayerStates.idle]; }
@@ -38,9 +40,11 @@ public class PlayerStateFactory
     public PlayerBaseState Aim() { return states[PlayerStates.aim]; }
     
     public PlayerBaseState Use() { return states[PlayerStates.use]; }
+    
+    public PlayerBaseState Throw() { return states[PlayerStates.throwObject]; }
 }
 
 public enum PlayerStates
 {
-    idle, walk, run, interact, grounded, jump, fall, aim, use
+    idle, walk, run, interact, grounded, jump, fall, aim, use, throwObject
 }

@@ -56,7 +56,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 1.94
-  m_Radius: 0.5
+  m_Radius: 0.25
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -95,13 +95,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aee97e8ad542bc041a1bf60a5271b712, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponLayerMask:
+  itemLayerMask:
     serializedVersion: 2
     m_Bits: 256
   rotationFactorPerFrame: 5
   rotationRunFactorPerFrame: 10
   runMultiplier: 5
   moveMultiplier: 2.5
+  centerPointRadius: 1
+  itemDetectionRadius: 1
   targetDetectionRadius: 5
   targetLayerMask:
     serializedVersion: 2
@@ -109,6 +111,8 @@ MonoBehaviour:
   maxJumpHeight: 1
   maxJumpTime: 0.75
   fallMultiplier: 2
+  maxThrowDistance: 5
+  maxThrowUpwardDistance: 2
 --- !u!114 &2985944502910582127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,7 +127,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemSlot: {fileID: 4896233072857518038}
   equippedWeapon: {fileID: 0}
-  equippedPotion: {fileID: 0}
 --- !u!1001 &3219742929931192890
 PrefabInstance:
   m_ObjectHideFlags: 0

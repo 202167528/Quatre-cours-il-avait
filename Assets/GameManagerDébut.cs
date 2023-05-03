@@ -33,6 +33,10 @@ public class GameManagerDébut : MonoBehaviour
     {
         --vie;
     }
+    public void AugmenterVie()
+    {
+        ++vie;
+    }
     public void ChangerScène()
     {
         ++numScène;

@@ -34,15 +34,20 @@ public class PlayerStats : MonoBehaviour
 
     private void Start()
     {
+        gameManager = GameObject.Find("GameManagerDébut").GetComponent<GameManagerDébut>();
         health = gameManager.vie;
-        var différenceDeVie = 5 - gameManager.vie;
+        //var différenceDeVie = 5 - gameManager.vie;
 
-        for (int i = 0; i < différenceDeVie; i++)
-        {
-            TakeDamage(i);
-        }
 
-        ClampHealth();
+        //HealthBarHUDTester viePerso = gameObject.AddComponent<HealthBarHUDTester>();
+        //viePerso.Hurt(différenceDeVie);
+
+        //for (int i = 0; i < différenceDeVie; i++)
+        //{
+        //    Hurt(i);
+        //}
+
+       // ClampHealth();
     }
 
     public void Heal(int health)

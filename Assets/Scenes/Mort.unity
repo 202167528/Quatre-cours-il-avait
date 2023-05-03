@@ -386,8 +386,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1147676218}
-        m_TargetAssemblyTypeName: RetounerMenu, Assembly-CSharp
+      - m_Target: {fileID: 1454986919}
+        m_TargetAssemblyTypeName: GameManagerTutorielTest, Assembly-CSharp
         m_MethodName: RetournerMenue
         m_Mode: 1
         m_Arguments:
@@ -1185,6 +1185,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 516685197}
   m_SourcePrefab: {fileID: 100100000, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
+--- !u!114 &1454986919 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6905734091176603183, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
+  m_PrefabInstance: {fileID: 1454986918}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83677dd0828fedd4dbdad7471c052e5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1907316193
 GameObject:
   m_ObjectHideFlags: 0

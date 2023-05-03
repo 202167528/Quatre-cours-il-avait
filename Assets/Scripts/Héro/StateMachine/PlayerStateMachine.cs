@@ -46,7 +46,7 @@ public class PlayerStateMachine : MonoBehaviour
     
     // variables pour interact
     private bool isInteractPressed;
-    [SerializeField] private float itemDetectionRadius = 1.0f;
+    [SerializeField] private float itemDetectionRadius = 2.0f;
     private Collider[] colliders;
     
     // variables pour aim
@@ -62,6 +62,11 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] private float maxJumpTime = 0.5f;
     [SerializeField] private float fallMultiplier = 2.0f;
     private bool requireNewJumpPress;
+    
+    // variables pour le lancer
+    private bool isThrowPressed;
+    [SerializeField] private float maxThrowDistance = 5.0f;
+    [SerializeField] private float maxThrowUpwardDistance = 2.0f;
 
     // variables pour les states
     private PlayerBaseState currentState;
@@ -84,6 +89,7 @@ public class PlayerStateMachine : MonoBehaviour
     public bool RequireNewJumpPress { get => requireNewJumpPress; set => requireNewJumpPress = value; }
     public bool IsAttacking { get => isAttacking; set => isAttacking = value; }
     public bool IsJumpPressed => isJumpPressed;
+    public bool IsThrowPressed => isThrowPressed;
     public bool IsUsePressed => isUsePressed;
     public bool IsMovementPressed => isMovementPressed;
     public bool IsRunPressed => isRunPressed;
@@ -101,6 +107,8 @@ public class PlayerStateMachine : MonoBehaviour
     public float TargetDetectionRadius { get => targetDetectionRadius; }
     public float ItemDetectionRadius { get => itemDetectionRadius; }
     public float CenterPointRadius { get => centerPointRadius; }
+    public float MaxThrowDistance { get => maxThrowDistance; }
+    public float MaxThrowUpwardDistance { get => maxThrowUpwardDistance; }
     public Vector2 CurrentMovementInput { get => currentMovementInput; }
 
     private void SetupJumpVariables()
@@ -147,7 +155,10 @@ public class PlayerStateMachine : MonoBehaviour
         characterInput.PlayerInput.Aim.performed += OnAim;
         characterInput.PlayerInput.Use.started += OnUse;
         characterInput.PlayerInput.Use.canceled += OnUse;
-        
+        characterInput.PlayerInput.Throw.started += OnThrow;
+        characterInput.PlayerInput.Throw.canceled += OnThrow;
+        characterInput.PlayerInput.Throw.performed += OnThrow;
+
         SetupJumpVariables();
     }
     
@@ -203,6 +214,11 @@ public class PlayerStateMachine : MonoBehaviour
         
         currentState.UpdateStates();
         characterController.Move(appliedMovement * Time.deltaTime);
+    }
+
+    private void OnThrow(InputAction.CallbackContext context)
+    {
+        isThrowPressed = context.ReadValueAsButton();
     }
 
     private void OnUse(InputAction.CallbackContext context)

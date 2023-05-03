@@ -6,17 +6,23 @@ public class ItemManager : MonoBehaviour
 {
     [SerializeField] private Transform itemSlot;
     public WeaponDataSO equippedWeapon;
-    public PotionDataSO equippedPotion;
 
     private GameObject currentWeapon;
     private GameObject currentPotion;
 
+    GameManagerDébut gameManager;
+
     public void EquipWeapon(WeaponDataSO weaponData)
     {
         equippedWeapon = weaponData;
-        
+        var rb = equippedWeapon.weaponPrefab.GetComponent<Rigidbody>();
+
         if (currentWeapon != null)
         {
+            if (rb != null)
+            {
+                rb.isKinematic = false;
+            }
             Instantiate(currentWeapon, transform.position, Quaternion.identity);
             Destroy(currentWeapon);
         }
@@ -24,21 +30,20 @@ public class ItemManager : MonoBehaviour
         currentWeapon = Instantiate(equippedWeapon.weaponPrefab, itemSlot, true);
         currentWeapon.transform.rotation = Quaternion.LookRotation(-transform.right);
         currentWeapon.transform.localPosition = Vector3.zero;
+        if (rb != null)
+        {
+            rb.isKinematic = true;
+        }
     }
 
     public void EquipPotion(PotionDataSO potionData)
     {
-        equippedPotion = potionData;
-        
-        if (currentPotion != null)
-        {
-            Instantiate(currentPotion, transform.position, Quaternion.identity);
-            Destroy(currentPotion);
-        }
-
-        currentPotion = Instantiate(equippedPotion.potionPrefab, itemSlot, true);
-        currentPotion.transform.rotation = Quaternion.identity;
-        currentPotion.transform.localPosition = Vector3.zero;
+        // La potion donne de la vie au personnage **À COMPLÉTER**
+       
+        gameManager = GameObject.Find("GameManagerDébut").GetComponent<GameManagerDébut>();
+        HealthBarHUDTester viePerso = gameObject.AddComponent<HealthBarHUDTester>();
+        viePerso.Heal(potionData.healthBoost);
+        gameManager.AugmenterVie();
     }
 
     public void DestroyGameObject(GameObject gameObject)
