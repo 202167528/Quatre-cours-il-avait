@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Fond menu 2.unity
+    path: Assets/Scenes/FondMenu2.unity
     guid: d7fba13490758b4448f7bc9641d633e0
   - enabled: 1
     path: Assets/Scenes/Tutoriel.unity
@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Mort.unity
     guid: 678ca05357a97424198f97139133d9b5
+  - enabled: 1
+    path: Assets/Scenes/SceneTutoriel.unity
+    guid: ecad96754244c8645a395ae0e31b882b
   m_configObjects: {}

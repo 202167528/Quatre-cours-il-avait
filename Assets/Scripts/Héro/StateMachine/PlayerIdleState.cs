@@ -23,13 +23,16 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void CheckSwitchStates()
     {
-        if (Ctx.IsInteractPressed && Ctx.ItemManager.equippedWeapon == null && Ctx.ItemManager.equippedPotion == null)
+        if (Ctx.IsInteractPressed)
         {
             SwitchState(Factory.Interact());
         } else if (Ctx.IsUsePressed)
         {
             SwitchState(Factory.Use());
-        }else if (Ctx.IsMovementPressed && Ctx.IsRunPressed)
+        } else if (Ctx.IsAimPressed)
+        {
+            SwitchState(Factory.Aim());
+        } else if (Ctx.IsMovementPressed && Ctx.IsRunPressed)
         {
             SwitchState(Factory.Run());
         } else if (Ctx.IsMovementPressed)

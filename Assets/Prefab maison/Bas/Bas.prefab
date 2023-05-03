@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 3035832685806970214}
   - component: {fileID: 6948728268910222393}
   - component: {fileID: 5518876180409647108}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SM_Env_Wall_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,8 +124,16 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 892585827577963214}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Size: {x: 5.242591, y: 5.2445936, z: 0.43003404}
   m_Center: {x: -2.473404, y: 2.5289917, z: 0.05744391}

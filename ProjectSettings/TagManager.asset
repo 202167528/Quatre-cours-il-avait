@@ -11,15 +11,15 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Obstacles
+  - ObstaclesMurs
   - Water
   - UI
   - Player
   - Enemy
   - Weapon
-  - 
-  - 
-  - 
+  - Damage
+  - Obstacles
+  - Terrain
   - 
   - 
   - 

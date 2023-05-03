@@ -13,26 +13,20 @@ public class PlayerStateMachine : MonoBehaviour
     private WeaponDataSO weaponData;
     private PotionDataSO potionData;
     private ItemManager itemManager;
-    [SerializeField] private LayerMask weaponLayerMask;
+    [SerializeField] private LayerMask itemLayerMask;
     
     // variables qui mettent en mémoire setter/getter paramètre IDs
     private int isWalkingHash;
     private int isJumpingHash;
-    private int isFallingHash;
-    private int isInteractingHash;
     private int velocityXHash;
     private int velocityZHash;
-    private int isAimingWithWeaponHash;
-    private int isAimingHash;
-    private int isUsingHash;
+    private int useHash;
     private int attackIndexHash;
     
     // variables qui mettent en mémoire les valeurs de Character Input
     private Vector2 currentMovementInput;
     private Vector3 currentMovement;
-    private Vector3 currentRunMovement;
     private Vector3 appliedMovement;
-    private Vector2 mouseLook;
     private Vector3 rotationTarget;
     private bool isMovementPressed;
     private bool isRunPressed;
@@ -48,27 +42,26 @@ public class PlayerStateMachine : MonoBehaviour
     // variables pour attaquer
     private bool isUsePressed;
     private bool isAttacking;
+    [SerializeField] private float centerPointRadius = 1.0f;
     
     // variables pour interact
     private bool isInteractPressed;
-    private bool isInteracting;
-    private bool isGrabbing;
+    [SerializeField] private float itemDetectionRadius = 1.0f;
+    private Collider[] colliders;
     
     // variables pour aim
     private bool isAimPressed;
-    private Vector3 targetPosition;
+    private GameObject target;
     [SerializeField] private float targetDetectionRadius = 5.0f;
     [SerializeField] private LayerMask targetLayerMask;
 
     // variables pour le saut
     private bool isJumpPressed;
     private float initialJumpVelocity;
-    [SerializeField] private float maxJumpHeight = 1.0f;
-    [SerializeField] private float maxJumpTime = 0.75f;
+    [SerializeField] private float maxJumpHeight = 0.5f;
+    [SerializeField] private float maxJumpTime = 0.5f;
     [SerializeField] private float fallMultiplier = 2.0f;
     private bool requireNewJumpPress;
-    private bool isJumping;
-    private bool isJumpingAnimating;
 
     // variables pour les states
     private PlayerBaseState currentState;
@@ -80,23 +73,16 @@ public class PlayerStateMachine : MonoBehaviour
     public WeaponDataSO WeaponData { get => weaponData; set => weaponData = value; }
     public PotionDataSO PotionData { get => potionData; set => potionData = value; }
     public ItemManager ItemManager => itemManager;
-    public LayerMask WeaponLayerMask => weaponLayerMask;
+    public GameObject Target { get => target; set => target = value; }
+    public LayerMask ItemLayerMask => itemLayerMask;
     public LayerMask TargetLayerMask => targetLayerMask;
     public CharacterController CharacterController { get => characterController; set => characterController = value; }
     public int IsJumpingHash => isJumpingHash;
     public int IsWalkingHash => isWalkingHash;
-    public int IsFallingHash => isFallingHash;
-    public int IsInteractingHash => isInteractingHash;
-    public int IsUsingHash => isUsingHash;
+    public int UseHash => useHash;
     public int AttackIndexHash => attackIndexHash;
-    public int IsAimingHash => isAimingHash;
-    public int IsAimingWithWeaponHash => isAimingWithWeaponHash;
     public bool RequireNewJumpPress { get => requireNewJumpPress; set => requireNewJumpPress = value; }
-    public bool IsJumpingAnimating { set => isJumpingAnimating = value; }
-    public bool IsJumping { set => isJumping = value; }
-    public bool IsInteracting { get => isInteracting; set => isInteracting = value; }
     public bool IsAttacking { get => isAttacking; set => isAttacking = value; }
-    public bool IsGrabbing { get => isGrabbing; set => isGrabbing = value; }
     public bool IsJumpPressed => isJumpPressed;
     public bool IsUsePressed => isUsePressed;
     public bool IsMovementPressed => isMovementPressed;
@@ -113,8 +99,9 @@ public class PlayerStateMachine : MonoBehaviour
     public float RunMultiplier { get => runMultiplier; }
     public float MoveMultiplier { get => moveMultiplier; }
     public float TargetDetectionRadius { get => targetDetectionRadius; }
+    public float ItemDetectionRadius { get => itemDetectionRadius; }
+    public float CenterPointRadius { get => centerPointRadius; }
     public Vector2 CurrentMovementInput { get => currentMovementInput; }
-    public Vector3 TargetPosition { get => targetPosition; set => targetPosition = value; }
 
     private void SetupJumpVariables()
     {
@@ -139,14 +126,10 @@ public class PlayerStateMachine : MonoBehaviour
         // set les paramètres hash reference
         isWalkingHash = Animator.StringToHash("isWalking");
         isJumpingHash = Animator.StringToHash("isJumping");
-        isFallingHash = Animator.StringToHash("isFalling");
-        isInteractingHash = Animator.StringToHash("isInteracting");
         velocityXHash = Animator.StringToHash("velocityX");
         velocityZHash = Animator.StringToHash("velocityZ");
-        isAimingWithWeaponHash = Animator.StringToHash("isAimingWithWeapon");
-        isAimingHash = Animator.StringToHash("isAiming");
         attackIndexHash = Animator.StringToHash("attackIndex");
-        isUsingHash = Animator.StringToHash("isUsing");
+        useHash = Animator.StringToHash("use");
         
 
         // set les callbacks du characterInput
@@ -159,9 +142,6 @@ public class PlayerStateMachine : MonoBehaviour
         characterInput.PlayerInput.Jump.canceled += OnJump;
         characterInput.PlayerInput.Interact.started += OnInteract;
         characterInput.PlayerInput.Interact.canceled += OnInteract;
-        characterInput.PlayerInput.MouseLook.started += OnLook;
-        characterInput.PlayerInput.MouseLook.canceled += OnLook;
-        characterInput.PlayerInput.MouseLook.performed += OnLook;
         characterInput.PlayerInput.Aim.started += OnAim;
         characterInput.PlayerInput.Aim.canceled += OnAim;
         characterInput.PlayerInput.Aim.performed += OnAim;
@@ -173,7 +153,7 @@ public class PlayerStateMachine : MonoBehaviour
     
     private void HandleRotationWithAim()
     {
-        var lookPos = targetPosition - transform.position;
+        var lookPos = target != null ? target.transform.position - transform.position : transform.forward;
         lookPos.y = 0;
         var rotation = Quaternion.LookRotation(lookPos);
 
@@ -187,9 +167,9 @@ public class PlayerStateMachine : MonoBehaviour
     {
         Vector3 positionToLookAt;
         // change la position où le joueur devrait pointer
-        positionToLookAt.x = currentMovement.x;
+        positionToLookAt.x = currentMovementInput.x;
         positionToLookAt.y = 0;
-        positionToLookAt.z = currentMovement.z;
+        positionToLookAt.z = currentMovementInput.y;
         // la rotation présentement du joueur
         var currentRotation = transform.rotation;
 
@@ -202,17 +182,6 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void HandleRotationAnimation()
     {
-        //var movementInput = currentMovementInput.magnitude == 0 ? transform.forward : new Vector3(currentMovementInput.x, 0, currentMovementInput.y);
-        //var directionForward = Vector3.Dot(transform.forward, movementInput);
-        //Debug.DrawRay(transform.position, transform.forward, Color.red);
-        //Debug.DrawRay(transform.position, movementInput, Color.blue);
-
-        //var angleSign = Vector3.Cross(movementInput, transform.forward).y < 0 ? 1 : -1;
-        //var angle = angleSign * 360 * Mathf.Acos(directionForward / (transform.forward.magnitude * movementInput.magnitude)) / (2 * Mathf.PI);
-        //angle = Mathf.Clamp(angle, -180.0f, 180.0f);
-        
-        //animator.SetFloat(angleHash, angle);
-
         var direction = appliedMovement.x * transform.forward + appliedMovement.z * transform.right;
         
         Animator.SetFloat(velocityXHash, direction.x);
@@ -252,11 +221,6 @@ public class PlayerStateMachine : MonoBehaviour
         if (characterController.isGrounded)
             isInteractPressed = context.ReadValueAsButton();
     }
-
-    private void OnLook(InputAction.CallbackContext context)
-    {
-        mouseLook = context.ReadValue<Vector2>();
-    }
     
     private void OnJump(InputAction.CallbackContext context)
     {
@@ -272,23 +236,19 @@ public class PlayerStateMachine : MonoBehaviour
     private void OnMovementInput(InputAction.CallbackContext context)
     {
         currentMovementInput = context.ReadValue<Vector2>();
-        currentMovement.x = currentMovementInput.x;
-        currentMovement.z = currentMovementInput.y;
-        currentRunMovement.x = currentMovementInput.x * runMultiplier;
-        currentRunMovement.z = currentMovementInput.y * runMultiplier;
         isMovementPressed = currentMovementInput.x != 0 || currentMovementInput.y != 0;
     }
     
-    public void ResetAnimation()
+    // Active l'animation d'attaque
+    public void EnableAttacking()
     {
-        IsInteracting = false;
-        IsGrabbing = false;
-        IsAttacking = false;
+        isAttacking = true;
     }
 
-    public void SetIsGrabbing()
+    // Désactive l'animation d'attaque
+    public void DisableAttacking()
     {
-        isGrabbing = true;
+        isAttacking = false;
     }
     
     private void OnEnable()

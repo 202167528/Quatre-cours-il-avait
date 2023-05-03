@@ -23,8 +23,8 @@ public class PlayerJumpState : PlayerBaseState, IRootState
     {
         if (Ctx.IsMovementPressed)
         {
-            Ctx.AppliedMovementX = Ctx.CurrentMovementInput.x * currentMovement;
-            Ctx.AppliedMovementZ = Ctx.CurrentMovementInput.y * currentMovement;
+            Ctx.AppliedMovementX = currentMovement != 0 ? Ctx.CurrentMovementInput.x * currentMovement : Ctx.CurrentMovementInput.x * Ctx.MoveMultiplier;
+            Ctx.AppliedMovementZ = currentMovement != 0 ? Ctx.CurrentMovementInput.y * currentMovement : Ctx.CurrentMovementInput.y * Ctx.MoveMultiplier;
         }
         
         HandleGravity();
@@ -38,7 +38,6 @@ public class PlayerJumpState : PlayerBaseState, IRootState
         {
             Ctx.RequireNewJumpPress = true;
         }
-        Ctx.IsJumpingAnimating = false;
     }
 
     public override void CheckSwitchStates()
@@ -56,7 +55,6 @@ public class PlayerJumpState : PlayerBaseState, IRootState
     private void HandleJump()
     {
         Ctx.Animator.SetBool(Ctx.IsJumpingHash,true);
-        Ctx.IsJumping = true;
         
         currentMovementX = Mathf.Abs(Ctx.AppliedMovementX);
         currentMovementZ = Mathf.Abs(Ctx.AppliedMovementZ);

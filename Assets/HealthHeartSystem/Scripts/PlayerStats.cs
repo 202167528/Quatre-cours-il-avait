@@ -26,7 +26,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private int maxHealth;
     [SerializeField] private int maxTotalHealth;
 
-    private GérerPersonnage changerScène = GérerPersonnage.Instance;
+    GameManagerDébut gameManager;
 
     public int Health { get { return health; } }
     public int MaxHealth { get { return maxHealth; } }
@@ -34,7 +34,15 @@ public class PlayerStats : MonoBehaviour
 
     private void Start()
     {
-        health = changerScène.life;
+        health = gameManager.vie;
+        var différenceDeVie = 5 - gameManager.vie;
+
+        for (int i = 0; i < différenceDeVie; i++)
+        {
+            TakeDamage(i);
+        }
+
+        ClampHealth();
     }
 
     public void Heal(int health)

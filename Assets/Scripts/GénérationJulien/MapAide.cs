@@ -25,7 +25,7 @@ public static class MapAide
                 break;
 
             case Direction.Bas:
-                position = new Vector3(Random.Range(0, grille.Largeur / 4), 0, 0);
+                position = new Vector3(Random.Range(3, grille.Largeur / 4), 0, 0);
                 break;
 
             default:

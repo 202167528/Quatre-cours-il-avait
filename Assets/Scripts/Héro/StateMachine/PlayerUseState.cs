@@ -9,47 +9,34 @@ public class PlayerUseState : PlayerBaseState
 
     public override void EnterState()
     {
-        Ctx.IsAttacking = true;
-        HandleUse();
+        HandleAttack();
     }
 
     public override void UpdateState()
     {
         CheckSwitchStates();
+        //DamageEnemy();
     }
 
     public override void ExitState()
     {
-        Ctx.IsAttacking = false;
-        Ctx.Animator.SetBool(Ctx.IsUsingHash, false);
+        Ctx.Animator.ResetTrigger(Ctx.UseHash);
     }
 
     public override void CheckSwitchStates()
     {
         if (!Ctx.IsAttacking)
         {
-            if (!Ctx.IsMovementPressed)
-            {
-                SwitchState(Factory.Idle());
-            } 
-        } else switch (Ctx.IsMovementPressed)
-        {
-            case true when !Ctx.IsRunPressed:
-                SwitchState(Factory.Walk());
-                break;
-            case true when Ctx.IsRunPressed:
-                SwitchState(Factory.Run());
-                break;
+            SwitchState(Factory.Idle());
         }
     }
 
     public override void InitializeSubState(){}
 
-    private void HandleUse()
+    private void HandleAttack()
     {
         if (Ctx.ItemManager.equippedWeapon == null)
         {
-            Ctx.IsAttacking = false;
             return;
         }
         
@@ -57,6 +44,17 @@ public class PlayerUseState : PlayerBaseState
         Ctx.AppliedMovementZ = 0;
         
         Ctx.Animator.SetInteger(Ctx.AttackIndexHash, Ctx.ItemManager.equippedWeapon.animation);
-        Ctx.Animator.SetBool(Ctx.IsUsingHash, true);
+        Ctx.Animator.SetTrigger(Ctx.UseHash);
+    }
+
+    private void DamageEnemy()
+    {
+        var colliders =
+            Physics.OverlapSphere(Ctx.ItemManager.equippedWeapon.centerPoint.transform.position, Ctx.CenterPointRadius, Ctx.TargetLayerMask);
+
+        if (colliders.Length > 0)
+        {
+            // L'ennemi perd de la vie **À COMPLÉTER**
+        }
     }
 }

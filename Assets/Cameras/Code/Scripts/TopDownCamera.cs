@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 
 public class TopDownCamera : MonoBehaviour
 {
-    [SerializeField] private Transform target;
 
     [SerializeField] private float height = 10;
 
@@ -22,6 +21,8 @@ public class TopDownCamera : MonoBehaviour
 
     [SerializeField] private Material matTransparent;
 
+    private Transform target;
+
     private Vector3 refVector;
 
     List<MeshRenderer> renderers = new List<MeshRenderer>();
@@ -33,6 +34,7 @@ public class TopDownCamera : MonoBehaviour
 
     private void Start()
     {
+        target = GameObject.Find("HéroGordon").transform;
         HandleCamera();
     }
 

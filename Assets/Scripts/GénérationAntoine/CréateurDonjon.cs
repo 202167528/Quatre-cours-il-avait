@@ -23,10 +23,13 @@ public class CréateurDonjon : MonoBehaviour
         murVerticaleGaucheTorche, murHorizontaleBasTorche, murVerticaleDroiteTorche, murHorizontaleHautTorche,
         murVerticaleGaucheBiblio, murHorizontaleBasBiblio, murVerticaleDroiteBiblio, murHorizontaleHautBiblio,
         murVerticaleGaucheÉtage, murHorizontaleBasÉtage, murVerticaleDroiteÉtage, murHorizontaleHautÉtage,
-        murSortie, murEntrée, player;
+        murSortie, murEntrée;
 
+    private GameObject player;
 
-    public GameObject baril, pierres1, pierres2, pierres3, champi1, champi2, champi3, tapis1, tapis2, épée2, hache, petitePotion, grossePotion;
+    private float temps = 0;
+
+    public GameObject baril, pierres1, pierres2, pierres3, champi1, champi2, champi3, tapis1, tapis2, épée2, hache, petitePotion, grossePotion, enemy;
 
     double[] probabilitésObjets;
     GameObject[] ObjetsPossibles;
@@ -46,22 +49,16 @@ public class CréateurDonjon : MonoBehaviour
     Vector3 PositionEntrée;
     [SerializeField]
     int probabilité;
-    private void Awake()
-    {
-        player = GameObject.Find("HéroGordonQuiMarche");
-        CréereDonjon();
-        InstantierHéro();
-    }
     private void Start()
     {
+        CréereDonjon();   
+        InstantierHéro();
         DétruirePrefabExtérieur();
     }
     private void InstantierHéro()
-    {
-        var entrancePosition = new Vector3(PositionEntrée.x, PositionEntrée.y, PositionEntrée.z);
-        var playerPosition = new Vector3(entrancePosition.x + 1, player.transform.position.y, entrancePosition.z + 0.3f);
-        player.transform.position = playerPosition;
-        //player.transform.forward = -(entrancePosition - playerPosition).normalized;
+    {     
+        player = GameObject.Find("HéroGordon");
+        player.transform.position = new Vector3(PositionEntrée.x + 1f, PositionEntrée.y + 1f, PositionEntrée.z + 1f);
     }
 
     private void DétruirePrefabExtérieur()
@@ -94,10 +91,9 @@ public class CréateurDonjon : MonoBehaviour
                 listePrefabObjets.Remove(listePrefabObjets[j]);
             }
         }
-        for (int z = listeÀDétruire.Count-1; z >= 0; z--)
+        for (int z = listeÀDétruire.Count - 1; z >= 0; z--)
         {
             Destroy(listeÀDétruire[z]);
-
         }
     }
 
@@ -127,13 +123,13 @@ public class CréateurDonjon : MonoBehaviour
     {
         listePrefabObjets = new List<GameObject>();
         ObjetsPossibles = new GameObject[]
-        { baril, pierres1, pierres2, pierres3, champi1, champi2, champi3, tapis1, tapis2, hache, épée2, petitePotion, grossePotion };
-        probabilitésObjets = new double[] { 0, 0.05, 0.25, 0.35, 0.45, 0.6, 0.7, 0.80, 0.82, 0.84, 0.88, 0.92, 0.98, 1.1 };
+                                         { baril, pierres1, pierres2, pierres3, champi1, champi2, champi3, tapis1, tapis2, hache, épée2, petitePotion, grossePotion, enemy };
+        probabilitésObjets = new double[] { 0, 0.05, 0.15, 0.25, 0.35, 0.5, 0.6, 0.70, 0.72, 0.74, 0.78, 0.82, 0.88, 0.95, 1.1 };
         foreach (var pièce in listeDePièces)
         {
             if (!(pièce.CoinBasDroit.x - pièce.CoinBasGauche.x == largeurCouloir) && !(pièce.CoinHautGauche.y - pièce.CoinBasGauche.y == largeurCouloir))
             {
-                var nbObjets = UnityEngine.Random.Range(0, (pièce.CoinBasDroit.x - pièce.CoinBasGauche.x) * (pièce.CoinHautGauche.y - pièce.CoinBasGauche.y) / 10);
+                var nbObjets = UnityEngine.Random.Range(0, (pièce.CoinBasDroit.x - pièce.CoinBasGauche.x) * (pièce.CoinHautGauche.y - pièce.CoinBasGauche.y) / 20);
                 for (int i = 0; i < nbObjets; i++)
                 {
                     var randomZ = UnityEngine.Random.Range(pièce.CoinHautGauche.y, pièce.CoinBasGauche.y);
@@ -224,7 +220,7 @@ public class CréateurDonjon : MonoBehaviour
                 {
                     CréerMur(mursParents, positionMurs, murVerticaleGauche);
                 }
-            }      
+            }
         }
         TroucerMursDroiteLePlusÉloigné();
         foreach (var positionMurs in positionMurPossibleVerticaleDroite)
@@ -335,6 +331,8 @@ public class CréateurDonjon : MonoBehaviour
         soldonjon.GetComponent<MeshRenderer>().material = matériel;
         soldonjon.AddComponent<MeshCollider>();
         soldonjon.AddComponent<BoxCollider>();
+        soldonjon.layer = 11;
+
 
         for (int rangée = (int)sBasGauche.x; rangée < (int)sBasDroit.x; rangée++)
         {

@@ -36,10 +36,7 @@ public class PlayerGroundedState : PlayerBaseState, IRootState
         if (Ctx.IsJumpPressed && !Ctx.RequireNewJumpPress)
         {
             SwitchState(Factory.Jump());
-        } else if (Ctx.IsAimPressed)
-        {
-            SwitchState(Factory.Aim());
-        }else if (!Ctx.CharacterController.isGrounded)
+        } else if (!Ctx.CharacterController.isGrounded)
         {
             SwitchState(Factory.Fall());
         }
@@ -62,10 +59,7 @@ public class PlayerGroundedState : PlayerBaseState, IRootState
 
     private void HandleAnimation()
     {
-        if (Ctx.IsInteractPressed)
-        {
-            Ctx.Animator.SetBool(Ctx.IsInteractingHash, true);
-        } else if (Ctx.IsMovementPressed || Ctx.IsRunPressed)
+        if (Ctx.IsMovementPressed || (Ctx.IsRunPressed && Ctx.IsMovementPressed))
         {
             Ctx.Animator.SetBool(Ctx.IsWalkingHash, true);
         }

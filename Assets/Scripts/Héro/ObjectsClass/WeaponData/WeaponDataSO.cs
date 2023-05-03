@@ -9,5 +9,6 @@ public class WeaponDataSO : ScriptableObject
     public int durability;
     public int damage;
     public string weaponName;
+    public GameObject centerPoint;
     public GameObject weaponPrefab;
 }

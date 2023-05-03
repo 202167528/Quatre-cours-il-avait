@@ -345,6 +345,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 386240246}
   m_CullTransparentMesh: 1
+--- !u!1 &437824638
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 437824640}
+  - component: {fileID: 437824639}
+  m_Layer: 0
+  m_Name: "R\xE9cup\xE9rationInformationTutoriel"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &437824639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437824638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43214f4549891db439a888cdd52f1dbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &437824640
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437824638}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 553.73956, y: 0.95810735, z: 567.3544}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &583092507
 GameObject:
   m_ObjectHideFlags: 0
@@ -837,7 +881,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1147266367}
-  - component: {fileID: 1147266368}
   m_Layer: 5
   m_Name: MenuPrincipale
   m_TagString: Untagged
@@ -865,19 +908,6 @@ RectTransform:
   m_AnchoredPosition: {x: 29.230713, y: -44.87451}
   m_SizeDelta: {x: 996.6972, y: 478.7711}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1147266368
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1147266365}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cee45d87c34f46749b86e5699af44a05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  life: 0
 --- !u!1 &1179433754
 GameObject:
   m_ObjectHideFlags: 0
@@ -1575,8 +1605,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1147266368}
-        m_TargetAssemblyTypeName: "ChangerSc\xE8ne, Assembly-CSharp"
+      - m_Target: {fileID: 437824639}
+        m_TargetAssemblyTypeName: "R\xE9cup\xE9rationInformationTutoriel, Assembly-CSharp"
         m_MethodName: PlayGame
         m_Mode: 1
         m_Arguments:

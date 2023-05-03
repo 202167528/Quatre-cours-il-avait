@@ -13,7 +13,6 @@ public class PlayerFallState : PlayerBaseState, IRootState
     public override void EnterState()
     {
         InitializeSubState();
-        Ctx.Animator.SetBool(Ctx.IsFallingHash,true);
     }
 
     public override void UpdateState()
@@ -24,7 +23,6 @@ public class PlayerFallState : PlayerBaseState, IRootState
 
     public override void ExitState()
     {
-        Ctx.Animator.SetBool(Ctx.IsFallingHash,false);
     }
 
     public void HandleGravity()
